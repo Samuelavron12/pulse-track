@@ -1,0 +1,23 @@
+# One-click backend on Render (free plan). Serves: the API, the web app, and the /admin page.
+# Create a free PostgreSQL database at neon.tech, then in Render: New → Blueprint → pick this repo.
+services:
+  - type: web
+    name: pulse-track
+    runtime: node
+    plan: free
+    buildCommand: npm --prefix frontend install && npm --prefix frontend run build && npm --prefix backend install
+    startCommand: npm --prefix backend start
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NODE_VERSION
+        value: 20
+      - key: DATABASE_URL
+        sync: false          # paste your Neon / Supabase connection string
+      - key: JWT_SECRET
+        generateValue: true
+      - key: ADMIN_EMAIL
+        sync: false          # your master-admin login for /admin
+      - key: ADMIN_PASSWORD
+        sync: false          # at least 8 characters

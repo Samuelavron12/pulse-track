@@ -1,0 +1,17 @@
+{
+  "name": "pulse-track",
+  "version": "4.0.0",
+  "private": true,
+  "description": "Pulse Track \u2014 free & open-source stock, sales and supplier manager (web + Android)",
+  "scripts": {
+    "install:all": "cd backend && npm install && cd ../frontend && npm install",
+    "dev:backend": "cd backend && npm run dev",
+    "dev:frontend": "cd frontend && npm run dev",
+    "seed": "cd backend && node src/db/seed.js",
+    "start": "cd backend && npm start",
+    "build:frontend": "cd frontend && npm run build",
+    "migrate": "cd backend && node src/db/migrate.js",
+    "build:mobile": "cd frontend && npm run build:mobile"
+  },
+  "license": "MIT"
+}

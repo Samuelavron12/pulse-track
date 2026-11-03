@@ -1,0 +1,1 @@
+{ "watch": ["src"], "ext": "js,json", "ignore": ["src/db/schema.sql"], "exec": "node src/index.js" }

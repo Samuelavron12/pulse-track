@@ -1,0 +1,8 @@
+{
+  "appId": "com.pulsetrack.app",
+  "appName": "Pulse Track",
+  "webDir": "dist",
+  "backgroundColor": "#0D1B2A",
+  "server": { "androidScheme": "https" },
+  "android": { "allowMixedContent": false }
+}

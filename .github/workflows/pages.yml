@@ -1,0 +1,38 @@
+name: Publish web app (GitHub Pages)
+
+# Optional: puts the web app on https://YOUR-USER.github.io/REPO/ — needs the API_URL variable.
+# Enable once: repo → Settings → Pages → Source: "GitHub Actions".
+on:
+  push:
+    branches: [main]
+    paths: ['frontend/**', '.github/workflows/pages.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency: { group: pages, cancel-in-progress: true }
+
+jobs:
+  deploy:
+    if: ${{ vars.API_URL != '' }}
+    runs-on: ubuntu-latest
+    environment: { name: github-pages, url: '${{ steps.dep.outputs.page_url }}' }
+    env:
+      VITE_API_URL: ${{ vars.API_URL }}
+      VITE_BASE: ./
+      VITE_HASH_ROUTER: 'true'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - run: npm install --no-audit --no-fund
+        working-directory: frontend
+      - run: npm run build
+        working-directory: frontend
+      - uses: actions/upload-pages-artifact@v3
+        with: { path: frontend/dist }
+      - id: dep
+        uses: actions/deploy-pages@v4
